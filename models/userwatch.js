@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      models.userWatch.belongsToMany(models.user)
     }
   };
   userWatch.init({
