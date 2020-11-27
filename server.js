@@ -7,6 +7,8 @@ const morgan = require('morgan')
 
 const routes = require('./routes')
 const passport = require('./passport')
+const favorites = require('./routes/favorites')
+const watchList = require('./routes/watchList')
 
 const port = process.env.PORT || 4000
 const app = express()
@@ -44,6 +46,9 @@ app.use(passport.session())
 
 // middleware - API routes
 app.use('/api/v1/auth', routes.auth)
+app.use('/favorites', favorites)
+app.use('/watch-list', watchList)
+
 
 // connection
 app.listen(port, () => console.log(`Server is running on port ${port}`))
