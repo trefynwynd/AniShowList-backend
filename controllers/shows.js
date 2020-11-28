@@ -23,37 +23,48 @@ const favoriteList = (req, res) => {
 // To obtain a list of watched, planning to, or completed shows
 // Read
 // This is basically the same as favourites, but for a different page
+// This looks correct
 const watchingList = (req, res) => {
-
-where: {
-  apiId
-  watching: req.body.watch
-}
-
-}
+  db.userwatch.findByPk(req.user.id).then((user) => {
+    user.getWatch().then((watch) => {
+      let watchShows = userwatch.map(apiId => {
+        fetch('https://api.jikan.moe/v3/anime/${apiId.mal_id').then(res => res.json())
+      })
+      let watchingStatus = userwatch.watching
+        res.render('watchlist', { watchShows, watchingStatus })
+      })
+    })
+  }
 
 // To add the watching status of a show and also the api
 // Create
 const watchStatus = (req, res) => {
   // create
-
-  where: {
-    apiId
-    watching: req.body.watch
-  }
-
+  db.user.findByPk(req.user.id).then((user) => {
+    db.userwatch.findOrCreate({
+      where: {
+        apiId: mal_id,
+        watching: req.body.watch
+      }
+      }).then(([watchShow, created]) => {
+        user.addStatus(watchShow).then((relationInfo) => {
+        res.redirect('/watchlist');
+      })
+    })
+  })
 }
 
 // To update the watching status
 // Update
 // This looks correct
 const statusChange = (req, res) => {
-  db.user.findByPk(req.user.id)
-  .then((user) => {
+  db.user.findByPk(req.user.id).then((user) => {
     db.userwatch.update(req.body, {
       where: {
         watching: req.body.watch
       }
+    }).then((updateStatus) => {
+        res.redirect('/watchlist')
     })
   })
 }
@@ -62,12 +73,15 @@ const statusChange = (req, res) => {
 // Create
 // This looks correct
 const addFave = (req, res) => {
-  db.user.findByPk(req.user.id)
-  .then((user) => {
+  db.user.findByPk(req.user.id).then((user) => {
     db.usershow.findOrCreate({
       where: {
         apiId: req.body.name
       }
+      }).then(([foundShow, created]) => {
+        user.addFave(foundShow).then((relationInfo) => {
+        res.redirect('/favorites');
+      })
     })
   })
 
@@ -76,7 +90,15 @@ const addFave = (req, res) => {
 // To delete a favourite
 // Delete
 const deleteFave = (req, res) => {
-
+  let id = req.params.id
+  db.usershow.findOne({
+    where: {
+      apiId: mal_id
+    }
+    }).then((foundShow) => {
+      foundShow.destroy();
+    })
+   res.redirect('/favorites')
 }
 
 module.exports = {
