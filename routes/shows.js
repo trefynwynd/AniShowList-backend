@@ -3,11 +3,12 @@ const router = require('express').Router();
 const ctrl = require('../controllers');
 
 // routes
-router.get('/favorites', ctrl.shows.index);
-router.get('/watching', ctrl.shows.watching);
-router.post('/', ctrl.shows.create);
-router.put('/:id', ctrl.shows.update);
-router.delete('/:id', ctrl.shows.destroy);
+router.get('/favorites', ctrl.shows.favoriteList);
+router.get('/watching', ctrl.shows.watchingList);
+router.post('/favorites', ctrl.shows.addFave)
+router.post('/watching', ctrl.shows.watchStatus);
+router.put('/watching/:id', ctrl.shows.statusChange);
+router.delete('/favorites/:id', ctrl.shows.deleteFave);
 
 // exports
 module.exports = router;
