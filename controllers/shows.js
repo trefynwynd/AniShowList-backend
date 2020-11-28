@@ -13,8 +13,9 @@ const index = (req, res) => {
       res.render('favorites', {faveShows})
     })
   })
-  .catch(err => return (
-        document.querySelector("#faveContainer").innerHTML = "<p>You do not have any shows that are favourited."), err)
+  .catch(err => return (console.log("Error in the faves department.")
+        // document.querySelector("#faveContainer").innerHTML = "<p>You do not have any shows that are favourited.")
+        , err)
 }
 
 // To obtain a list of watched, planning to, or completed shows
@@ -64,7 +65,7 @@ const destroy = (req, res) => {
 module.exports = {
     index,
     watching,
-    create,
+    watchStatus,
     update,
     addFave,
     deleteFave,
