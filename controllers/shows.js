@@ -3,6 +3,7 @@ const db = require('../models');
 
 
 // This is to list the favourites (based on art.)
+// This looks 
 const index = (req, res) => {
   // by the userId, find all things in userShow (which is just the apiID)
   db.usershow.findByPk(req.user.id).then((user) => {
@@ -12,10 +13,10 @@ const index = (req, res) => {
     })
       res.render('favorites', {faveShows})
     })
-  })
-  .catch(err => return (console.log("Error in the faves department.")
-        // document.querySelector("#faveContainer").innerHTML = "<p>You do not have any shows that are favourited.")
-        , err)
+  }).catch(err) {
+    // Should if there are no faveShows for the user, then it would error out and display an error on the page
+    document.querySelector("#faveContainer").innerHTML = "<p>You do not have any shows that are favourited.</p>"
+  }
 }
 
 // To obtain a list of watched, planning to, or completed shows
