@@ -3,8 +3,9 @@ const db = require('../models');
 
 
 // This is to list the favourites (based on art.)
-// This looks 
-const index = (req, res) => {
+// Read
+// This looks correct
+const favoriteList = (req, res) => {
   // by the userId, find all things in userShow (which is just the apiID)
   db.usershow.findByPk(req.user.id).then((user) => {
     user.getFaves().then((faves) => {
@@ -20,20 +21,33 @@ const index = (req, res) => {
 }
 
 // To obtain a list of watched, planning to, or completed shows
+// Read
 // This is basically the same as favourites, but for a different page
-const watching = (req, res) => {
+const watchingList = (req, res) => {
+
+where: {
+  apiId
+  watching: req.body.watch
+}
 
 }
 
 // To add the watching status of a show and also the api
+// Create
 const watchStatus = (req, res) => {
   // create
+
+  where: {
+    apiId
+    watching: req.body.watch
+  }
 
 }
 
 // To update the watching status
+// Update
 // This looks correct
-const update = (req, res) => {
+const statusChange = (req, res) => {
   db.user.findByPk(req.user.id)
   .then((user) => {
     db.userwatch.update(req.body, {
@@ -45,6 +59,7 @@ const update = (req, res) => {
 }
 
 // fave button
+// Create
 // This looks correct
 const addFave = (req, res) => {
   db.user.findByPk(req.user.id)
@@ -59,15 +74,16 @@ const addFave = (req, res) => {
 }
 
 // To delete a favourite
-const destroy = (req, res) => {
+// Delete
+const deleteFave = (req, res) => {
 
 }
 
 module.exports = {
-    index,
-    watching,
+    favoriteList,
+    watchingList,
     watchStatus,
-    update,
+    statusChange,
     addFave,
     deleteFave,
 };
