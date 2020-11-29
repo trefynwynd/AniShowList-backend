@@ -13,7 +13,7 @@ const index = (req, res) => {
     })
       res.render('favorites', {faveShows})
     })
-  }).catch(err) {
+  }).catch(err) ;{
     // Should if there are no faveShows for the user, then it would error out and display an error on the page
     document.querySelector("#faveContainer").innerHTML = "<p>You do not have any shows that are favourited.</p>"
   }
