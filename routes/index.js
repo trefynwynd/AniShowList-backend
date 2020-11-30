@@ -1,5 +1,4 @@
 module.exports = {
-    auth: require('./auth')
+    auth: require('./auth'),
+    usersFavorites: require('./usersFavorites')
 }
-
-// disregard this comment, git isn't wanting to take my new changes
