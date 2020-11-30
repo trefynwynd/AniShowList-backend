@@ -1,4 +1,4 @@
 module.exports = {
-    auth: require('./auth')
-    // shows: require('./shows')
+    auth: require('./auth'),
+    usersFavorites: require('./usersFavorites')
 }
