@@ -1,7 +1,5 @@
 const db = require('../models');
 
-
-
 // This is to list the favourites (based on art.)
 // Read
 // This looks correct
@@ -9,12 +7,12 @@ const favoriteList = (req, res) => {
   // by the userId, find all things in userShow (which is just the apiID)
   db.usershow.findByPk(req.user.id).then((user) => {
     user.getFaves().then((faves) => {
-    let faveShows = usershow.map (apiId => {
-      fetch('https://api.jikan.moe/v3/anime/${apiId.mal_id').then(res => res.json())
+      let faveShows = usershow.map(apiId => {
+        fetch(`https://api.jikan.moe/v3/anime/${apiId.mal_id}`).then(res => res.json())
+      })
+      res.render('favorites', { faveShows })
     })
-      res.render('favorites', {faveShows})
-    })
-  }).catch(err) ;{
+  }).catch(err); {
     // Should if there are no faveShows for the user, then it would error out and display an error on the page
     document.querySelector("#faveContainer").innerHTML = "<p>You do not have any shows that are favourited.</p>"
   }
@@ -28,13 +26,13 @@ const watchingList = (req, res) => {
   db.userwatch.findByPk(req.user.id).then((user) => {
     user.getWatch().then((watch) => {
       let watchShows = userwatch.map(apiId => {
-        fetch('https://api.jikan.moe/v3/anime/${apiId.mal_id').then(res => res.json())
+        fetch(`https://api.jikan.moe/v3/anime/${apiId.mal_id}`).then(res => res.json())
       })
       let watchingStatus = userwatch.watching
-        res.render('watchlist', { watchShows, watchingStatus })
-      })
+      res.render('watch-list', { watchShows, watchingStatus })
     })
-  }
+  })
+}
 
 // To add the watching status of a show and also the api
 // Create
@@ -46,9 +44,9 @@ const watchStatus = (req, res) => {
         apiId: mal_id,
         watching: req.body.watch
       }
-      }).then(([watchShow, created]) => {
-        user.addStatus(watchShow).then((relationInfo) => {
-        res.redirect('/watchlist');
+    }).then(([watchShow, created]) => {
+      user.addStatus(watchShow).then((relationInfo) => {
+        res.redirect('/watch-list');
       })
     })
   })
@@ -64,7 +62,7 @@ const statusChange = (req, res) => {
         watching: req.body.watch
       }
     }).then((updateStatus) => {
-        res.redirect('/watchlist')
+      res.redirect('/watch-list')
     })
   })
 }
@@ -78,8 +76,8 @@ const addFave = (req, res) => {
       where: {
         apiId: req.body.name
       }
-      }).then(([foundShow, created]) => {
-        user.addFave(foundShow).then((relationInfo) => {
+    }).then(([foundShow, created]) => {
+      user.addFave(foundShow).then((relationInfo) => {
         res.redirect('/favorites');
       })
     })
@@ -95,17 +93,17 @@ const deleteFave = (req, res) => {
     where: {
       apiId: mal_id
     }
-    }).then((foundShow) => {
-      foundShow.destroy();
-    })
-   res.redirect('/favorites')
+  }).then((foundShow) => {
+    foundShow.destroy();
+  })
+  res.redirect('/favorites')
 }
 
 module.exports = {
-    favoriteList,
-    watchingList,
-    watchStatus,
-    statusChange,
-    addFave,
-    deleteFave,
+  favoriteList,
+  watchingList,
+  watchStatus,
+  statusChange,
+  addFave,
+  deleteFave,
 };
