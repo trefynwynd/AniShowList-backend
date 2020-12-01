@@ -46,8 +46,9 @@ app.use(passport.session())
 
 // middleware - API routes
 app.use('/api/v1/auth', routes.auth)
-app.use('/favorites', favorites)
-app.use('/watch-list', watchList)
+app.use('/api/v1/usersFavorites', routes.usersFavorites)
+// app.use('/favorites', favorites)
+// app.use('/watchlist', watchList)
 
 
 // connection
