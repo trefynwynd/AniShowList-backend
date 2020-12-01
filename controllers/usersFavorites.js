@@ -10,10 +10,9 @@ const favoriteList = (req, res) => {
   // by the userId, find all things in userShow (which is just the apiID)
   db.userShow.findByPk(req.user.id).then((user) => {
     user.getFaves().then((faves) => {
-    let faveShows = userShow.map (apiId => {
-      fetch('https://api.jikan.moe/v3/anime/${apiId.mal_id').then(res => res.json())
-    })
-      res.render('favorites', {faveShows})
+      let faveShows = userShow.map (apiId => {
+        fetch('https://api.jikan.moe/v3/anime/${apiId.mal_id').then(res => res.json())
+      })
     })
   }) .catch(err => console.log("Error at userShow", err))
     // Should if there are no faveShows for the user, then it would error out and display an error on the page
