@@ -8,9 +8,9 @@ const db = require('../models');
 // This looks correct
 const favoriteList = (req, res) => {
   // by the userId, find all things in userShow (which is just the apiID)
-  db.usershow.findByPk(req.user.id).then((user) => {
+  db.userShow.findByPk(req.user.id).then((user) => {
     user.getFaves().then((faves) => {
-    let faveShows = usershow.map (apiId => {
+    let faveShows = userShow.map (apiId => {
       fetch('https://api.jikan.moe/v3/anime/${apiId.mal_id').then(res => res.json())
     })
       res.render('favorites', {faveShows})
@@ -24,16 +24,20 @@ const favoriteList = (req, res) => {
 // Create
 // This looks correct
 const addFave = (req, res) => {
-  db.user.findByPk(req.user.id).then((user) => {
-    db.usershow.findOrCreate({
+  console.log(req.body.userId)
+  console.log(req.body.apiId)
+  db.user.findByPk(req.body.userId).then((user) => {
+    db.userShow.findOrCreate({
       where: {
-        apiId: req.body.name
+        userId: req.body.userId,
+        apiId: req.body.apiId
       }
-      }).then(([foundShow, created]) => {
-        user.addFave(foundShow).then((relationInfo) => {
-        res.redirect('/favorites');
       })
-    })
+        // .then(([foundShow, created]) => {
+        //   user.addFave(foundShow).then((relationInfo) => {
+        //   // res.redirect('/favorites');
+        // })
+      // })
   })
 
 }
@@ -41,15 +45,16 @@ const addFave = (req, res) => {
 // To delete a favourite
 // Delete
 const deleteFave = (req, res) => {
-  let id = req.params.id
-  db.usershow.findOne({
+  // let apiId = req.params.apiId
+  db.userShow.findOne({
     where: {
-      apiId: mal_id
+      userId: req.params.userId,
+      apiId: req.params.apiId
     }
     }).then((foundShow) => {
       foundShow.destroy();
     })
-   res.redirect('/favorites')
+  //  res.redirect('/favorites')
 }
 
 module.exports = {
