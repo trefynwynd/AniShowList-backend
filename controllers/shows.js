@@ -4,16 +4,16 @@ const db = require('../models');
 // To obtain a list of watched, planning to, or completed shows
 // Read
 // This is basically the same as favourites, but for a different page
-// This looks correct
 const watchingList = (req, res) => {
-  db.userwatch.findByPk(req.user.id).then((user) => {
-    user.getWatch().then((watch) => {
-      let watchShows = userwatch.map(apiId => {
-        fetch(`https://api.jikan.moe/v3/anime/${apiId.mal_id}`).then(res => res.json())
-      })
-      let watchingStatus = userwatch.watching
-      res.render('watch-list', { watchShows, watchingStatus })
-    })
+  // by the userId, find all things in userShow (which is just the apiID)
+  db.userWatch.findAll({
+    // find all by the userId
+    where: {
+      userId: req.params.userId,
+    }
+  }).then((data) => {
+    // Then take all that is found under the "data" and move it into a json to push to the frontend
+    res.json(data)
   })
 }
 
@@ -22,36 +22,34 @@ const watchingList = (req, res) => {
 const watchStatus = (req, res) => {
   // create
   db.user.findByPk(req.user.id).then((user) => {
-    db.userwatch.findOrCreate({
+    db.userWatch.findOrCreate({
       where: {
         apiId: mal_id,
         watching: req.body.watch
       }
-    }).then(([watchShow, created]) => {
-      user.addStatus(watchShow).then((relationInfo) => {
-        res.redirect('/watch-list');
-      })
-    })
+    }).then((foundWatch) => {
+      res.json({foundWatch, message: `Show added to watch list.`})
+    }).catch(err => console.log("Error at creation", err))
   })
 }
 
-// To update the watching status
+// To update the watching status.
 // Update
-// This looks correct
+// PUT can access body or params
 const statusChange = (req, res) => {
   db.user.findByPk(req.user.id).then((user) => {
-    db.userwatch.update(req.body, {
+    db.userWatch.update(req.body.watch, {
       where: {
         watching: req.body.watch
       }
-    }).then((updateStatus) => {
-      res.redirect('/watch-list')
-    })
+    }).then((foundWatch) => {
+      res.json({foundWatch, message: `Show status updated.`})
+    }).catch(err => console.log("Error at update", err))
   })
 }
 
 module.exports = {
-    watchingList,
-    watchStatus,
-    statusChange,
+  watchingList,
+  watchStatus,
+  statusChange,
 };

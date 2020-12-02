@@ -7,8 +7,7 @@ const morgan = require('morgan')
 
 const routes = require('./routes')
 const passport = require('./passport')
-const favorites = require('./routes/favorites')
-const watchList = require('./routes/watchList')
+
 
 const port = process.env.PORT || 4000
 const app = express()
@@ -47,6 +46,7 @@ app.use(passport.session())
 // middleware - API routes
 app.use('/api/v1/auth', routes.auth)
 app.use('/api/v1/usersFavorites', routes.usersFavorites)
+app.use('/api/v1/shows', routes.shows)
 // app.use('/favorites', favorites)
 // app.use('/watchlist', watchList)
 
