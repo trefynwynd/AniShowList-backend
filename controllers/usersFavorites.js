@@ -29,14 +29,8 @@ const addFave = (req, res) => {
         apiId: req.body.apiId,
         image_url: req.body.image_url
       }
-    })
-    // .then(([foundShow, created]) => {
-    //   user.addFave(foundShow).then((relationInfo) => {
-    //   // res.redirect('/favorites');
-    // })
-    // })
+    }).then(() => res.redirect('/favorites'))
   })
-
 }
 
 
@@ -51,7 +45,7 @@ const deleteFave = (req, res) => {
       apiId: req.params.apiId
     }
   }).then((foundShow) => {
-    foundShow.destroy();
+    foundShow.destroy().then(() => res.sendStatus(200));
   })
   //  res.redirect('/favorites')
 }
