@@ -7,17 +7,13 @@ const db = require('../models');
 // Read
 // This looks correct
 const favoriteList = (req, res) => {
-  // by the userId, find all things in userShow (which is just the apiID)
-  db.userShow.findByPk(req.user.id).then((user) => {
-    user.getFaves().then((faves) => {
-    let faveShows = userShow.map (apiId => {
-      fetch('https://api.jikan.moe/v3/anime/${apiId.mal_id').then(res => res.json())
-    })
-      res.render('favorites', {faveShows})
-    })
-  }) .catch(err => console.log("Error at userShow", err))
-    // Should if there are no faveShows for the user, then it would error out and display an error on the page
-    // document.querySelector("#faveContainer").innerHTML = "<p>You do not have any shows that are favourited.</p>"
+  db.userShow.findAll({
+    where: {
+      userId: req.params.userId,
+    }
+  }).then((data) => {
+    res.json(data)
+  })
 }
 
 // fave button
@@ -30,17 +26,20 @@ const addFave = (req, res) => {
     db.userShow.findOrCreate({
       where: {
         userId: req.body.userId,
-        apiId: req.body.apiId
+        apiId: req.body.apiId,
+        image_url: req.body.image_url
       }
-      })
-        // .then(([foundShow, created]) => {
-        //   user.addFave(foundShow).then((relationInfo) => {
-        //   // res.redirect('/favorites');
-        // })
-      // })
+    })
+    // .then(([foundShow, created]) => {
+    //   user.addFave(foundShow).then((relationInfo) => {
+    //   // res.redirect('/favorites');
+    // })
+    // })
   })
 
 }
+
+
 
 // To delete a favourite
 // Delete
@@ -51,9 +50,9 @@ const deleteFave = (req, res) => {
       userId: req.params.userId,
       apiId: req.params.apiId
     }
-    }).then((foundShow) => {
-      foundShow.destroy();
-    })
+  }).then((foundShow) => {
+    foundShow.destroy();
+  })
   //  res.redirect('/favorites')
 }
 

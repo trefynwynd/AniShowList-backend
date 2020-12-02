@@ -9,13 +9,13 @@ const watchingList = (req, res) => {
   db.userwatch.findByPk(req.user.id).then((user) => {
     user.getWatch().then((watch) => {
       let watchShows = userwatch.map(apiId => {
-        fetch('https://api.jikan.moe/v3/anime/${apiId.mal_id').then(res => res.json())
+        fetch(`https://api.jikan.moe/v3/anime/${apiId.mal_id}`).then(res => res.json())
       })
       let watchingStatus = userwatch.watching
-        res.render('watchlist', { watchShows, watchingStatus })
-      })
+      res.render('watch-list', { watchShows, watchingStatus })
     })
-  }
+  })
+}
 
 // To add the watching status of a show and also the api
 // Create
@@ -27,9 +27,9 @@ const watchStatus = (req, res) => {
         apiId: mal_id,
         watching: req.body.watch
       }
-      }).then(([watchShow, created]) => {
-        user.addStatus(watchShow).then((relationInfo) => {
-        res.redirect('/watchlist');
+    }).then(([watchShow, created]) => {
+      user.addStatus(watchShow).then((relationInfo) => {
+        res.redirect('/watch-list');
       })
     })
   })
@@ -45,12 +45,10 @@ const statusChange = (req, res) => {
         watching: req.body.watch
       }
     }).then((updateStatus) => {
-        res.redirect('/watchlist')
+      res.redirect('/watch-list')
     })
   })
 }
-
-
 
 module.exports = {
     watchingList,

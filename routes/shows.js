@@ -4,10 +4,10 @@ const ctrl = require('../controllers');
 
 // routes
 router.get('/favorites', ctrl.shows.favoriteList);
-router.get('/watchlist', ctrl.shows.watchingList);
+router.get('/watch-list', ctrl.shows.watchingList);
 router.post('/favorites', ctrl.shows.addFave)
-router.post('/watchlist', ctrl.shows.watchStatus);
-router.put('/watchlist/:id', ctrl.shows.statusChange);
+router.post('/watch-list', ctrl.shows.watchStatus);
+router.put('/watch-list/:id', ctrl.shows.statusChange);
 router.delete('/favorites/:id', ctrl.shows.deleteFave);
 
 // exports

@@ -1,9 +1,9 @@
 // imports
-const router = require('express').Router();
+    const router = require('express').Router();
 const ctrl = require('../controllers');
 
 // routes
-router.get('/', ctrl.usersFavorites.favoriteList);
+router.get('/:userId', ctrl.usersFavorites.favoriteList);
 router.post('/', ctrl.usersFavorites.addFave)
 router.delete('/:userId/:apiId', ctrl.usersFavorites.deleteFave);
 
