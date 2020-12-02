@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   };
   userShow.init({
     userId: DataTypes.INTEGER,
-    apiId: DataTypes.INTEGER
+    apiId: DataTypes.INTEGER,
+    image_url: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'userShow',

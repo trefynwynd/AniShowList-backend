@@ -38,17 +38,20 @@ const addFave = (req, res) => {
     db.userShow.findOrCreate({
       where: {
         userId: req.body.userId,
-        apiId: req.body.apiId
+        apiId: req.body.apiId,
+        image_url: req.body.image_url
       }
-      })
-        // .then(([foundShow, created]) => {
-        //   user.addFave(foundShow).then((relationInfo) => {
-        //   // res.redirect('/favorites');
-        // })
-      // })
+    })
+    // .then(([foundShow, created]) => {
+    //   user.addFave(foundShow).then((relationInfo) => {
+    //   // res.redirect('/favorites');
+    // })
+    // })
   })
 
 }
+
+
 
 // To delete a favourite
 // Delete
@@ -59,9 +62,9 @@ const deleteFave = (req, res) => {
       userId: req.params.userId,
       apiId: req.params.apiId
     }
-    }).then((foundShow) => {
-      foundShow.destroy();
-    })
+  }).then((foundShow) => {
+    foundShow.destroy();
+  })
   //  res.redirect('/favorites')
 }
 

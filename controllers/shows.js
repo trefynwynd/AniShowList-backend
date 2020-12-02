@@ -48,8 +48,6 @@ const statusChange = (req, res) => {
   })
 }
 
-
-
 module.exports = {
   watchingList,
   watchStatus,
