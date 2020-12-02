@@ -1,4 +1,5 @@
 module.exports = {
     auth: require('./auth'),
-    usersFavorites: require('./usersFavorites')
+    usersFavorites: require('./usersFavorites'),
+    shows: require('./shows')
 }
