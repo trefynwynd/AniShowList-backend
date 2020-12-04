@@ -24,10 +24,10 @@ const watchStatus = (req, res) => {
   db.user.findByPk(req.body.id).then((user) => {
     db.userWatch.findOrCreate({
       where: {
-        userId: req.body.userId,
         apiId: req.body.apiId,
-        // watching: req.body.watch, // Currently not adding to table
+        // watching: req.body.watch, // No longer adding Watchlist table
         image_url: req.body.image_url,
+        userId: req.body.userId,
       }
     }).then((foundWatch) => {
       res.json({foundWatch, message: `Show added to watch list.`})
