@@ -3,7 +3,6 @@ const db = require('../models');
 
 // To obtain a list of watched, planning to, or completed shows
 // Read
-// This is basically the same as favourites, but for a different page
 const watchingList = (req, res) => {
   // by the userId, find all things in userShow (which is just the apiID)
   db.userWatch.findAll({
@@ -24,10 +23,10 @@ const watchStatus = (req, res) => {
   db.user.findByPk(req.body.id).then((user) => {
     db.userWatch.findOrCreate({
       where: {
-        apiId: req.body.apiId,
-        // watching: req.body.watch, // No longer adding Watchlist table
-        image_url: req.body.image_url,
         userId: req.body.userId,
+        apiId: req.body.apiId,
+        image_url: req.body.image_url,
+        // watching: req.body.watch, // No longer adding to Watchlist table
       }
     }).then((foundWatch) => {
       res.json({foundWatch, message: `Show added to watch list.`})
