@@ -4,7 +4,7 @@
 ## Introduction
 AniShowList is a PERN stack application that would allow you to search for your favorite shows. With an account, you are able to favorite these shows and put them on your watch list.
 
-This application is built to work with [this repository](https://github.com/trefynwynd/AniShowList-frontend).
+This application is built to work with [this frontend repository](https://github.com/trefynwynd/AniShowList-frontend).
 
 This is also the third of four projects for [General Assembly](https://generalassemb.ly)'s SEIR921 cohort.
 
@@ -15,6 +15,10 @@ The Team:
 * [Martin Cruz](https://github.com/martinacruz)
 * [Edward Gonzales](https://github.com/edwardglez)
 
+<p>&nbsp;</p>
+
+## Project Management
+* [Project Board](https://trello.com/b/kdB8JAqb/project-3)
 
 <p>&nbsp;</p>
 
@@ -51,6 +55,7 @@ We are using two 1:M relationship tables to have separate favorite and watching 
 |-----------|------|
 | userId (fk) | INTEGER |
 | apiId | INTEGER |
+| image_url | STRING |
 
 <p>&nbsp;</p>
 
@@ -59,21 +64,27 @@ We are using two 1:M relationship tables to have separate favorite and watching 
 |-----------|------|
 | userId (fk) | INTEGER |
 | apiId | INTEGER |
+| image_url | STRING |
 | watching | STRING |
 
 
-<p>&nbsp;</p>
-
-## Getting Started
-* [Project Board](https://trello.com/b/kdB8JAqb/project-3)
-* [AniShowList (frontend edition)](https://github.com/trefynwynd/AniShowList-frontend)
 
 <p>&nbsp;</p>
 
 ## Unsolved Problems:
-As of the writing of this readme file (2020.11.29), the backend seems ready for use. Apart from authentication, we currently are unable to get the front-end to at least complete a POST to the userShow table, and as such we do not know whether it works completely.
+During the resubmittal process, we commented out the watching attribute (at the last minute) from the userWatch table to complete the app. This attribute would allow the show not only be in a watching list, but also be set into a specific watching status. By just having a show be in the userWatch table accomplished our 3 model usage requirement.
+
+  * Though this isn't necessarily an unsolved problem, the way we were planning to use the watching attribute feels like it is.
 
 <p>&nbsp;</p>
+
+## Future features:
+* Re-enabling the watching attribute
+
+<p>&nbsp;</p>
+
+
+###### Third edit (2020.12.03)
 
 ###### Second edit (2020.11.29)
 
