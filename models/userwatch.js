@@ -17,7 +17,8 @@ module.exports = (sequelize, DataTypes) => {
   userWatch.init({
     userId: DataTypes.INTEGER,
     apiId: DataTypes.INTEGER,
-    watching: DataTypes.STRING
+    watching: DataTypes.STRING,
+    image_url: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'userWatch',

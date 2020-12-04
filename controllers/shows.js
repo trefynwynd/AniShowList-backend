@@ -21,11 +21,13 @@ const watchingList = (req, res) => {
 // Create
 const watchStatus = (req, res) => {
   // create
-  db.user.findByPk(req.user.id).then((user) => {
+  db.user.findByPk(req.body.id).then((user) => {
     db.userWatch.findOrCreate({
       where: {
-        apiId: mal_id,
-        watching: req.body.watch
+        userId: req.body.userId,
+        apiId: req.body.apiId,
+        // watching: req.body.watch, // Currently not adding to table
+        image_url: req.body.image_url,
       }
     }).then((foundWatch) => {
       res.json({foundWatch, message: `Show added to watch list.`})
